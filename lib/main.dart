@@ -59,7 +59,7 @@ class homescreenstate extends State<homescreen> {
                                     shape: new RoundedRectangleBorder(
                                         borderRadius:
                                             new BorderRadius.circular(24.0)),
-                                    onPressed: () => _handleLogin(true),
+                                    onPressed: () => handleLogin(true),
                                     elevation: 5.0,
                                     color: Color.fromRGBO(235, 56, 79, 10.0),
                                     textColor: Colors.white,
@@ -72,7 +72,7 @@ class homescreenstate extends State<homescreen> {
                                     ))),
                             new Divider(height: 15.0, color: Colors.white),
                             new GestureDetector(
-                                onTap: () => _handleLogin(false),
+                                onTap: () => handleLogin(false),
                                 child: new Text("Sign Up",
                                     style: new TextStyle(
                                         color: Colors.grey,
@@ -83,11 +83,11 @@ class homescreenstate extends State<homescreen> {
                           ]))
                 ]))));
   }
-  void _handleLogin(bool isLoginRequired) {
-    print('Send to the login screen now $isLoginRequired');
-    if (isLoginRequired)
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Login();
-      }));
+  void handleLogin(bool isLoginRequired) {
+      print('Send to the login screen now $isLoginRequired');
+      if (isLoginRequired==true)
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Login();
+        }));
   }
 }
