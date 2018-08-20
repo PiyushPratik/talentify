@@ -2,17 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:talentify/login.dart';
 
 void main() {
-  runApp(homescreen());
+  runApp(home());
 }
-
-class homescreen extends StatefulWidget {
-  @override
-  homescreenstate createState() => new homescreenstate();
-}
-
-class homescreenstate extends State<homescreen> {
+class home extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home:Homescreen(),
+    );
+  }
+}
+class Homescreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<Homescreen> {
+  double screenHeight, screenWidth;
+  @override
+  Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: new Scaffold(

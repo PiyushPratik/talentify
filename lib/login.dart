@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart';
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main(){
-  runApp(Login()) ;
+
+void main() {
+  runApp(Login());
 }
 
-class Login extends StatefulWidget{
+class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return Loginstate();
+    return LoginState();
   }
 }
 
-class Loginstate extends State<Login>{
+class LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   bool _obscureText = true;
   bool _showErrorLabel = false;
   double screenHeight, screenWidth;
   String _password, _email;
   void callLogin() async {
-    Navigator.push(context,MaterialPageRoute(builder: (context) {
-        return Text('hello');//DashBoard();
-      }),
-    );
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(builder: (context) {
+//        return Text('Failed');
+//      }),
+//    );
     final FormState form = _formKey.currentState;
     if (!form.validate()) {
       print('Invalid form');
@@ -40,14 +43,25 @@ class Loginstate extends State<Login>{
         print('Network call succeeded with body:$body');
         var token = bodyObj['token'];
         var id = bodyObj['id'];
-        print('token:$token>>>userId:$id');
-        Navigator.push(context,MaterialPageRoute(builder: (context) {
-            return Text('Flutter App');//dashboard();
+        var msg = bodyObj['msg'];
+        //print('$msg');
+        print('token:$token>>>id:$id');
+        String success='Success';
+        if(bodyObj['msg']==success){
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return Text('Hello');
           }),
         );
+        }
+        else{
+          print('$msg');
+        }
+
         Firestore.instance
-            .collection('198104')
-            .document('7QzUrFByFWxxoe0reuKk')
+            .collection('complexObjects')
+            .document('$id')
             .get()
             .then((onValue) {
           print('Done');
@@ -56,12 +70,150 @@ class Loginstate extends State<Login>{
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body:
-          Text('hello',style: TextStyle(color: Colors.red),),
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: new Scaffold(
+        //key: scaffoldState,
+        body: new Container(
+            child: new Theme(
+                data: new ThemeData(
+                    primaryColor: Colors.red,
+                    accentColor: Colors.orange,
+                    hintColor: Colors.grey),
+                child: new ListView(
+                  physics: new NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    new Container(
+                      padding: const EdgeInsets.only(
+                          left: 25.0, right: 25.0, top: 30.0),
+                      constraints: new BoxConstraints.expand(height: 640.0),
+                      color: Colors.white,
+                      child: new Column(
+                        children: <Widget>[
+                          new Text("Welcome back! Ready to get some work done?",
+                              textAlign: TextAlign.center,
+                              style: new TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          new Divider(
+                            color: Colors.white,
+                            height: 25.0,
+                          ),
+                          new Form(
+                              key: _formKey,
+                              child: new Column(children: [
+                                new TextFormField(
+                                    maxLines: 1,
+                                    keyboardType: TextInputType
+                                        .emailAddress, // Use email input type for emails.
+
+                                    onSaved: (val) => _email = val,
+                                    validator: (val) =>
+                                    !RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                        .hasMatch(val)
+                                        ? 'Not a valid email.'
+                                        : null,
+                                    decoration: new InputDecoration(
+                                        hintText: 'Email ID',
+                                        border: new OutlineInputBorder())),
+                                new Divider(
+                                  color: Colors.white,
+                                  height: 10.0,
+                                ),
+                                new TextFormField(
+                                  obscureText: _obscureText,
+                                  onSaved: (val) => _password = val,
+                                  validator: (val) => val.length < 4
+                                      ? 'Password too short.'
+                                      : null,
+                                  decoration: new InputDecoration(
+                                    hintText: 'Password',
+                                    border: const OutlineInputBorder(),
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        print('_passwordToggle');
+                                        setState(() {
+                                          _obscureText = !_obscureText;
+                                        });
+                                      },
+                                      child: _obscureText
+                                          ? const Icon(Icons.remove_red_eye,
+                                          color: Colors.grey)
+                                          : const Icon(Icons.remove_red_eye,
+                                          color: Colors.red),
+                                    ),
+                                  ),
+                                ),
+                                _showErrorLabel
+                                    ? new Container(
+                                  width: screenWidth - 30,
+                                  padding: const EdgeInsets.all(10.0),
+                                  margin:
+                                  const EdgeInsets.only(bottom: 10.0),
+                                  color: Colors.red,
+                                  child: new Text(
+                                    '_errorText',
+                                    textAlign: TextAlign.left,
+                                    style: new TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.red),
+                                  ),
+                                )
+                                    : new Container(
+                                    child: new Divider(
+                                      color: Colors.white,
+                                    )),
+                                new Container(
+                                    width: screenWidth - 30,
+                                    height: 45.0,
+                                    child: new RaisedButton(
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                            new BorderRadius.circular(
+                                                30.0)),
+                                        onPressed: () {
+                                          //ifFieldValid = validateFields();
+                                          callLogin();
+                                        },
+                                        elevation: 5.0,
+                                        color: Colors.red,
+                                        textColor: Colors.white,
+                                        child: new Text(
+                                          'LOG IN',
+                                          style: new TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold),
+                                        ))),
+                                new Divider(
+                                  color: Colors.transparent,
+                                  height: 5.0,
+                                ),
+                                new RaisedButton(
+                                    elevation: 0.0,
+                                    textColor: Colors.grey,
+                                    color: Colors.transparent,
+                                    onPressed: () {},
+                                    child: new Text(
+                                      'Forgot password?',
+                                      style: new TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.bold),
+                                    ))
+                              ])),
+                        ],
+                      ),
+                    ),
+                  ],
+                ))),
       ),
     );
   }
