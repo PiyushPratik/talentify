@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:talentify/dashboard.dart';
 
 void main() {
   runApp(Login());
@@ -51,7 +51,7 @@ class LoginState extends State<Login> {
           Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return Text('Hello');
+            return dashboard();
           }),
         );
         }
@@ -60,8 +60,8 @@ class LoginState extends State<Login> {
         }
 
         Firestore.instance
-            .collection('complexObjects')
-            .document('$id')
+            .collection('27')
+            .document('0')
             .get()
             .then((onValue) {
           print('Done');
