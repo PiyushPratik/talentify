@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:talentify/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
+import 'dashBoardCards.dart';
 
 class dashboard extends StatefulWidget {
   @override
@@ -11,21 +11,27 @@ class dashboard extends StatefulWidget {
 }
 
 class dashboardState extends State<dashboard> {
-  var count,taskss;
+  var count, taskss;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.redAccent,
             title: Text('Dashboard'),
           ),
           body: new StreamBuilder(
-              stream: Firestore.instance.collection('27').snapshots(),
+              stream: Firestore.instance.collection('198108').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData == false) {
-                  return const Text('Loading...',style: TextStyle(color: Colors.blue,),textAlign: TextAlign.center,);
+                  return const Text(
+                    'Loading...',
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                    textAlign: TextAlign.center,
+                  );
                 } else {
                   print(snapshot.hasData);
                   return new PageView.builder(
@@ -41,38 +47,23 @@ class dashboardState extends State<dashboard> {
                         //print('$taskss');
                         count = taskss.length;
                         print('$count');
-                        return ;
+                        return PageView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: count, //add the length of your list here
+                            itemBuilder: (BuildContext context, int index) {
+                              var task = taskss[index];
+                              return DashboardCards(task).getDashboardCard();
+                            });
                       });
                 }
-              })
-      ),
+              })),
     );
   }
 }
 
-class card extends dashboardState{
+class card extends dashboardState {
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount:count, //add the length of your list here
-        itemBuilder: (BuildContext context, int index) {
-          var head = taskss[index];
-          var title = head['title'];
-          return new Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Card(
-                    child: new Container(
-                      child: Text('$title'),
-                      color: Colors.redAccent,
-                      height: 420.0,
-                      width: 280.0,
-                    ))
-              ]);
-        }
-    ); ;
+    return MaterialApp();
   }
 }
-
