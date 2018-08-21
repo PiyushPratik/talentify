@@ -6,15 +6,14 @@ import 'dart:convert';
 class dashboard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return dashboardState();
   }
 }
 
 class dashboardState extends State<dashboard> {
+  var count,taskss;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -26,11 +25,11 @@ class dashboardState extends State<dashboard> {
               stream: Firestore.instance.collection('27').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData == false) {
-                  return const Text('Loading...');
+                  return const Text('Loading...',style: TextStyle(color: Colors.blue,),textAlign: TextAlign.center,);
                 } else {
                   print(snapshot.hasData);
-                  return new ListView.builder(
-                     itemCount: snapshot.data.documents.length,
+                  return new PageView.builder(
+                      itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
                         DocumentSnapshot task = snapshot.data.documents[index];
 //                        var tasks = task['id'];
@@ -38,34 +37,42 @@ class dashboardState extends State<dashboard> {
                         Map<String, dynamic> complexobject =
                             json.decode(complexobjectString);
                         //Map<String, dynamic> taskss=json.decode(complexobject['tasks'].toString());
-                        var taskss= complexobject['tasks'];
-                        var count= taskss.length;
-                        return new Text("$count");
+                        taskss = complexobject['tasks'];
+                        //print('$taskss');
+                        count = taskss.length;
+                        print('$count');
+                        return ;
                       });
                 }
               })
-          //new PageView.builder(
-//      scrollDirection: Axis.horizontal,
-//    itemCount: 5, //add the length of your list here
-//    itemBuilder: (BuildContext context, int index)
-//    {
-//    return new Column(
-//      crossAxisAlignment: CrossAxisAlignment.center,
-//      mainAxisAlignment: MainAxisAlignment.center,
-//    children: <Widget>[
-//      new Card(
-//        child:new Container(
-//          color: Colors.grey,
-//          height: 500.0,
-//          width: 350.0,
-//          padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
-//        )
-//      )
-//    ]
-//    );
-//    }
-//      )
-          ),
+      ),
     );
   }
 }
+
+class card extends dashboardState{
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount:count, //add the length of your list here
+        itemBuilder: (BuildContext context, int index) {
+          var head = taskss[index];
+          var title = head['title'];
+          return new Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Card(
+                    child: new Container(
+                      child: Text('$title'),
+                      color: Colors.redAccent,
+                      height: 420.0,
+                      width: 280.0,
+                    ))
+              ]);
+        }
+    ); ;
+  }
+}
+
