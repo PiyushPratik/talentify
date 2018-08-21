@@ -32,7 +32,7 @@ class HomeScreenState extends State<Homescreen> {
                 color: Colors.white,
                 child: new Column(children: <Widget>[
                   new Container(
-                      margin: EdgeInsets.only(top: 250.0),
+                      margin: EdgeInsets.only(top: 200.0),
                       color: Colors.white,
                       child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +91,7 @@ class HomeScreenState extends State<Homescreen> {
                                         fontSize: 16.0,
                                         letterSpacing: 1.0,
                                         fontWeight: FontWeight.normal))),
-                            new Divider(height: 22.0, color: Colors.white),
+                            new Divider(height: 2.0, color: Colors.white),
                           ]))
                 ]))));
   }
