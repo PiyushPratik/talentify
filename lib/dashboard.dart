@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'dashBoardCards.dart';
 import 'package:talentify/CustomIcons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter/material.dart';
+import 'package:talentify/Chatbot.dart';
 
 class dashboard extends StatefulWidget {
   @override
@@ -15,28 +16,31 @@ class dashboard extends StatefulWidget {
 
 class dashboardState extends State<dashboard> {
   var count, taskss;
-  var Exp=0;
-  var key;
-  // var id1=LoginState.id;
+  var Exp = 0, coins = 0;
+  var key, studentprof;
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     if (key == null) getkey();
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(235, 56, 79, 1.0),
-          title: Text('Xp $Exp'),
+          title: Text('$Exp XP'),
           actions: <Widget>[
             IconButton(icon: Image.asset('assets/images/coin_icon.png')),
+            Text(
+              '$coins',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 25.0, height: 1.5),
+            ),
             IconButton(
               icon: Icon(Icons.notifications, size: 30.0),
               onPressed: () {
                 print('Notification Icon pressed');
               },
-            )
+            ),
           ],
         ),
         body: getBody(),
@@ -112,9 +116,23 @@ class dashboardState extends State<dashboard> {
   }
 
   getBody() {
+    if (_currentIndex == 0) {
+      return getTaskBody();
+    } else if (_currentIndex == 1) {
+      return getRoleBody();
+    } else if (_currentIndex == 2) {
+      return getCalendarBody();
+    } else if (_currentIndex == 3) {
+      return getRepoBody();
+    } else if (_currentIndex == 4) {
+      return getChatBody();
+    }
+  }
+
+  getTaskBody() {
     if (key == null) {
-      return MaterialApp(
-        home: Text('Loading'),
+      return Scaffold(
+        body: Text('Loading'),
       );
     } else {
       return new StreamBuilder(
@@ -135,6 +153,11 @@ class dashboardState extends State<dashboard> {
                     Map<String, dynamic> complexobject =
                         json.decode(complexobjectString);
                     taskss = complexobject['tasks'];
+                    studentprof = complexobject['studentProfile'];
+                    Exp = studentprof['experiencePoints'];
+                    print('$Exp');
+//                    Exp=complexobject['studentProfile'];
+//                    var Expp=studentProfile['experiencePoints'];
                     count = taskss.length;
                     print('$count');
                     return PageView.builder(
@@ -150,4 +173,78 @@ class dashboardState extends State<dashboard> {
     }
   }
 
+  getRoleBody() {
+    return Scaffold(
+      body: Text('Loading Roles'),
+    );
+  }
+
+  getCalendarBody() {
+    return Scaffold(
+      body: Text('Loading Calendar'),
+    );
+  }
+
+  getRepoBody() {
+    return Scaffold(
+      body: Text('Loading Repository'),
+    );
+  }
+
+  getChatBody() {
+    return Scaffold(
+      body: GestureDetector(
+          child: Card(
+              child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(left: 15.0),
+                  child: Image.network(
+                    'http://business.talentify.in/course_images/AI.png',
+                    height: 60.0,
+                    alignment: Alignment.center,
+                  )),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                          bottom: 12.0, left: 30.0, top: 10.0),
+                      child: Text(
+                        'Talk with Zoya',
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20.0,
+                            color: Colors.black),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 30.0, bottom: 15.0),
+                      child: Text(
+                        'I am here to resolve all of your queries',
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          )),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => chatbot()),
+            );
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+    );
+  }
 }

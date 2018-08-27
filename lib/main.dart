@@ -4,16 +4,18 @@ import 'package:talentify/login.dart';
 void main() {
   runApp(home());
 }
-class home extends StatelessWidget{
+
+class home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:Homescreen(),
+      home: Homescreen(),
     );
   }
 }
+
 class Homescreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => HomeScreenState();
@@ -95,11 +97,12 @@ class HomeScreenState extends State<Homescreen> {
                           ]))
                 ]))));
   }
+
   void handleLogin(bool isLoginRequired) {
-      print('Send to the login screen now $isLoginRequired');
-      if (isLoginRequired==true)
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Login();
-        }));
+    print('Send to the login screen now $isLoginRequired');
+    if (isLoginRequired == true)
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Login();
+      }));
   }
 }

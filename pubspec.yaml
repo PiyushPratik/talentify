@@ -10,6 +10,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   path_provider: ^0.3.1
   cloud_firestore: ^0.7.3
+  shared_preferences: ^0.4.2
+
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +39,10 @@ flutter:
   - assets/images/talentify_logo_red.png
   - assets/images/talentify_logo.png
   - assets/images/coin_icon.png
+  - assets/images/calendar_icon.png
+  - assets/images/sales_call_icon.png
+  - assets/images/presentaion_task_icon.png
+  - assets/images/video_conference.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
@@ -67,3 +73,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+  fonts:
+    - family: Lato-Regular
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+    - family: MyFlutterApp
+      fonts:
+        - asset: assets/fonts/MyFlutterApp.ttf
