@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:talentify/dashboard.dart';
-
-void main() {
-  runApp(Login());
-}
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 class Login extends StatefulWidget {
   @override
@@ -22,20 +19,15 @@ class LoginState extends State<Login> {
   double screenHeight, screenWidth;
   String _password, _email;
   void callLogin() async {
-//    Navigator.push(
-//      context,
-//      MaterialPageRoute(builder: (context) {
-//        return Text('Failed');
-//      }),
-//    );
     final FormState form = _formKey.currentState;
     if (!form.validate()) {
       print('Invalid form');
     } else {
       form.save();
       print('Handle login for email:$_email and password:$_password');
-      post('http://192.168.1.7:8080/flutter-firebase/Authentication',
-          body: {"email": _email, "password": _password}).then((response) {
+      post('http://business.talentify.in:9090/flutter-firebase/Authentication',
+              body: {"email": _email, "password": _password})
+          .then((response) async {
         var statusCode = response.statusCode;
         var body = response.body;
         var bodyObj = jsonDecode(body);
@@ -43,30 +35,24 @@ class LoginState extends State<Login> {
         print('Network call succeeded with body:$body');
         var token = bodyObj['token'];
         var id = bodyObj['id'];
+        var value = int.parse(id);
+        // print((value is int));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('key', value);
         var msg = bodyObj['msg'];
         //print('$msg');
         print('token:$token>>>id:$id');
-        String success='Success';
-        if(bodyObj['msg']==success){
+        String success = 'Success';
+        if (bodyObj['msg'] == success) {
           Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return dashboard();
-          }),
-        );
-        }
-        else{
+            context,
+            MaterialPageRoute(builder: (context) {
+              return dashboard();
+            }),
+          );
+        } else {
           print('$msg');
         }
-
-        Firestore.instance
-            .collection('198108')
-            .document('1')
-            .get()
-            .then((onValue) {
-          print('Done');
-          print(onValue.data);
-        });
       });
     }
   }
@@ -116,10 +102,10 @@ class LoginState extends State<Login> {
 
                                     onSaved: (val) => _email = val,
                                     validator: (val) =>
-                                    !RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                        .hasMatch(val)
-                                        ? 'Not a valid email.'
-                                        : null,
+                                        !RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                                .hasMatch(val)
+                                            ? 'Not a valid email.'
+                                            : null,
                                     decoration: new InputDecoration(
                                         hintText: 'Email ID',
                                         border: new OutlineInputBorder())),
@@ -145,39 +131,39 @@ class LoginState extends State<Login> {
                                       },
                                       child: _obscureText
                                           ? const Icon(Icons.remove_red_eye,
-                                          color: Colors.grey)
+                                              color: Colors.grey)
                                           : const Icon(Icons.remove_red_eye,
-                                          color: Colors.red),
+                                              color: Colors.red),
                                     ),
                                   ),
                                 ),
                                 _showErrorLabel
                                     ? new Container(
-                                  width: screenWidth - 30,
-                                  padding: const EdgeInsets.all(10.0),
-                                  margin:
-                                  const EdgeInsets.only(bottom: 10.0),
-                                  color: Colors.red,
-                                  child: new Text(
-                                    '_errorText',
-                                    textAlign: TextAlign.left,
-                                    style: new TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.red),
-                                  ),
-                                )
+                                        width: screenWidth - 30,
+                                        padding: const EdgeInsets.all(10.0),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10.0),
+                                        color: Colors.red,
+                                        child: new Text(
+                                          '_errorText',
+                                          textAlign: TextAlign.left,
+                                          style: new TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.red),
+                                        ),
+                                      )
                                     : new Container(
-                                    child: new Divider(
-                                      color: Colors.white,
-                                    )),
+                                        child: new Divider(
+                                        color: Colors.white,
+                                      )),
                                 new Container(
                                     width: screenWidth - 30,
                                     height: 45.0,
                                     child: new RaisedButton(
                                         shape: new RoundedRectangleBorder(
                                             borderRadius:
-                                            new BorderRadius.circular(
-                                                30.0)),
+                                                new BorderRadius.circular(
+                                                    30.0)),
                                         onPressed: () {
                                           //ifFieldValid = validateFields();
                                           callLogin();
