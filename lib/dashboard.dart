@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dashBoardCards.dart';
 import 'package:talentify/CustomIcons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
+import 'package:talentify/Leaderboard.dart';
 import 'package:talentify/Chatbot.dart';
 
 class dashboard extends StatefulWidget {
@@ -17,10 +17,13 @@ class dashboard extends StatefulWidget {
 class dashboardState extends State<dashboard> {
   var count, taskss;
   var Exp = 0, coins = 0;
+  double screenHeight, screenWidth;
   var key, studentprof;
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     if (key == null) getkey();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -29,18 +32,31 @@ class dashboardState extends State<dashboard> {
           backgroundColor: Color.fromRGBO(235, 56, 79, 1.0),
           title: Text('$Exp XP'),
           actions: <Widget>[
-            IconButton(icon: Image.asset('assets/images/coin_icon.png')),
-            Text(
-              '$coins',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 25.0, height: 1.5),
-            ),
             IconButton(
-              icon: Icon(Icons.notifications, size: 30.0),
+              icon: Image.asset('assets/images/coin_icon.png'),
               onPressed: () {
-                print('Notification Icon pressed');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Leaderboard()),
+                );
               },
             ),
+            Container(
+              margin: EdgeInsets.only(top: 15.0, right: 25.0),
+              child: Text(
+                '$coins',
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 10.0),
+              child: IconButton(
+                icon: Icon(Icons.notifications, size: 30.0),
+                onPressed: () {
+                  print('Notification Icon pressed');
+                },
+              ),
+            )
           ],
         ),
         body: getBody(),
@@ -155,7 +171,8 @@ class dashboardState extends State<dashboard> {
                     taskss = complexobject['tasks'];
                     studentprof = complexobject['studentProfile'];
                     Exp = studentprof['experiencePoints'];
-                    print('$Exp');
+                    coins = studentprof['coins'];
+//                    print('$Exp');
 //                    Exp=complexobject['studentProfile'];
 //                    var Expp=studentProfile['experiencePoints'];
                     count = taskss.length;

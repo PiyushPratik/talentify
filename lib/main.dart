@@ -34,7 +34,7 @@ class HomeScreenState extends State<Homescreen> {
                 color: Colors.white,
                 child: new Column(children: <Widget>[
                   new Container(
-                      margin: EdgeInsets.only(top: 200.0),
+                      height: ((screenHeight * 70) / 100),
                       color: Colors.white,
                       child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +46,7 @@ class HomeScreenState extends State<Homescreen> {
                               height: 80.0,
                               child: Image
                                   .asset('assets/images/talentify_logo.png')),
-                          new Divider(height: 20.0, color: Colors.white),
+                          new Divider(height: screenHeight * 0.059, color: Colors.white),
                           new Text("TALENTIFY",
                               style: new TextStyle(
                                   color: Color.fromRGBO(165, 165, 165, 10.0),
@@ -56,8 +56,8 @@ class HomeScreenState extends State<Homescreen> {
                         ],
                       )),
                   Container(
-                      // height: ((screenHeight * 30) / 100),
-                      margin: EdgeInsets.only(top: 160.0),
+                      height: ((screenHeight * 30) / 100),
+                      //margin: EdgeInsets.only(top: 160.0),
                       color: Colors.white,
                       padding: const EdgeInsets.all(5.0),
                       child: new Column(
@@ -66,7 +66,7 @@ class HomeScreenState extends State<Homescreen> {
                             new Container(
                                 margin:
                                     EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                                width: 500.0,
+                                width: screenWidth * .82,
                                 height: 45.0,
                                 //color: Colors.yellow,
                                 child: new RaisedButton(
@@ -84,7 +84,7 @@ class HomeScreenState extends State<Homescreen> {
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold),
                                     ))),
-                            new Divider(height: 15.0, color: Colors.white),
+                            new Divider(height: screenHeight *0.039, color: Colors.white),
                             new GestureDetector(
                                 onTap: () => handleLogin(false),
                                 child: new Text("Sign Up",
@@ -93,7 +93,7 @@ class HomeScreenState extends State<Homescreen> {
                                         fontSize: 16.0,
                                         letterSpacing: 1.0,
                                         fontWeight: FontWeight.normal))),
-                            new Divider(height: 2.0, color: Colors.white),
+                            new Divider(height: screenHeight *0.037, color: Colors.white),
                           ]))
                 ]))));
   }

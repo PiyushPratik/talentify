@@ -10,17 +10,18 @@ class DashboardCards {
 
   Widget getDashboardCard() {
     var type = task['itemType'];
+    var status=task['status'];
     print('$type');
-    if (type == 'SALES_CALL_TASK') {
-      print('hi');
+    if (type == 'SALES_CALL_TASK' && status=='INCOMPLETE') {
+     // print('hi');
       return getcall();
       // return sales call card
-    } else if (type == 'SALES_PRESENTATION_TASK') {
-      print('hello');
+    } else if (type == 'SALES_PRESENTATION_TASK' && status=='INCOMPLETE') {
+      //print('hello');
       return getpresentation();
       //return some other template
-    } else if (type == 'SALES_WEBINAR_TASK') {
-      print('World');
+    } else if (type == 'SALES_WEBINAR_TASK' && status=='INCOMPLETE') {
+      //print('World');
       return getwebinar();
       //return some other template
     }

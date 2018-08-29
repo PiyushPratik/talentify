@@ -6,9 +6,9 @@ class chatbot extends StatelessWidget {
   final myController = TextEditingController();
   var _query, _key;
   @override
-//  void dispose() {
-//    myController.dispose();
-//  }
+  void dispose() {
+    myController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class chatbot extends StatelessWidget {
         body: Container(
             margin: EdgeInsets.only(
                 top: 540.0, bottom: 10.0, left: 20.0, right: 100.0),
-            child: TextField(
+            child: TextFormField(
               controller: myController,
             )),
         floatingActionButton: FloatingActionButton(
@@ -58,7 +58,7 @@ class chatbot extends StatelessWidget {
           child: IconButton(
             icon: Icon(Icons.send),
             onPressed: () {
-              return response();
+              return print(myController.text);
             },
           ),
         ),
@@ -72,7 +72,7 @@ class chatbot extends StatelessWidget {
           body: {"query": _query, "key":_key}).then((response) async {
         var statusCode = response.statusCode;
         var body = response.body;
-        var bodyObj = jsonDecode(body);
+       // var bodyObj = jsonDecode(body);
         print('statusCode:$statusCode>>>body:$body');
         print('Network call succeeded with body:$body');
       });

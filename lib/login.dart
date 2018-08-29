@@ -81,16 +81,20 @@ class LoginState extends State<Login> {
                       color: Colors.white,
                       child: new Column(
                         children: <Widget>[
+                          Divider(
+                            height: screenHeight * 0.1,
+                            color: Colors.white,
+                          ),
                           new Text("Welcome back! Ready to get some work done?",
                               textAlign: TextAlign.center,
                               style: new TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.normal,
                                 color: Colors.black,
                               )),
                           new Divider(
                             color: Colors.white,
-                            height: 25.0,
+                            height: screenHeight * 0.03,
                           ),
                           new Form(
                               key: _formKey,
@@ -111,7 +115,7 @@ class LoginState extends State<Login> {
                                         border: new OutlineInputBorder())),
                                 new Divider(
                                   color: Colors.white,
-                                  height: 10.0,
+                                  height: screenHeight * 0.03,
                                 ),
                                 new TextFormField(
                                   obscureText: _obscureText,
@@ -155,10 +159,11 @@ class LoginState extends State<Login> {
                                     : new Container(
                                         child: new Divider(
                                         color: Colors.white,
+                                        height: screenHeight * 0.02,
                                       )),
                                 new Container(
                                     width: screenWidth - 30,
-                                    height: 45.0,
+                                    height: screenHeight * 0.07,
                                     child: new RaisedButton(
                                         shape: new RoundedRectangleBorder(
                                             borderRadius:
@@ -175,12 +180,12 @@ class LoginState extends State<Login> {
                                           'LOG IN',
                                           style: new TextStyle(
                                               color: Colors.white,
-                                              fontSize: 16.0,
+                                              fontSize: 18.0,
                                               fontWeight: FontWeight.bold),
                                         ))),
                                 new Divider(
                                   color: Colors.transparent,
-                                  height: 5.0,
+                                  height: screenHeight * 0.05,
                                 ),
                                 new RaisedButton(
                                     elevation: 0.0,
@@ -191,9 +196,20 @@ class LoginState extends State<Login> {
                                       'Forgot password?',
                                       style: new TextStyle(
                                           color: Colors.grey,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.bold),
-                                    ))
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.normal),
+                                    )),
+                                new Divider(
+                                  color: Colors.transparent,
+                                  height: screenHeight * 0.05,
+                                ),
+                                Text(
+                                    'Not a member?Register instead',
+                                    style: new TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal),
+                                  ),
                               ])),
                         ],
                       ),
