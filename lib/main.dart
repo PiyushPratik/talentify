@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:talentify/login.dart';
+import 'package:talentify/Leaderboard.dart';
 
 void main() {
   runApp(home());
+
 }
 
 class home extends StatelessWidget {
@@ -100,9 +102,16 @@ class HomeScreenState extends State<Homescreen> {
 
   void handleLogin(bool isLoginRequired) {
     print('Send to the login screen now $isLoginRequired');
-    if (isLoginRequired == true)
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return Leaderboard();
+      }),
+    );
+
+  /*  if (isLoginRequired == true)
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return Login();
       }));
-  }
+  */}
 }

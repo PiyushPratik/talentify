@@ -20,7 +20,7 @@ class LoginState extends State<Login> {
   String _password, _email;
   void callLogin() async {
     final FormState form = _formKey.currentState;
-    if (!form.validate()) {
+   if (!form.validate()) {
       print('Invalid form');
     } else {
       form.save();
