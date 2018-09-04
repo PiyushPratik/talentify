@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'LeaderBoardInstance.dart';
+import 'dashboard.dart';
 
 class Leaderboard extends StatefulWidget {
   @override
@@ -12,12 +13,12 @@ class Leaderboard extends StatefulWidget {
 
 class LeaderboardState extends State<Leaderboard> {
   var type;
-  List<DropdownMenuItem<String>> list = [ ];
+  List leaderboards;
+  List<DropdownMenuItem<String>> list = [];
   String selected = 'All Roles';
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -26,36 +27,70 @@ class LeaderboardState extends State<Leaderboard> {
           leading: IconButton(
             icon: new Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return dashboard();
+              }));
             },
           ),
           title: Text('Leaderboard'),
-          actions: <Widget>[getDropwodnItemsAsync()],
+          actions: <Widget>[getDropdownItemsAsync1()],
         ),
         body: getLeaderboardNew(),
       ),
     );
   }
 
-  getDropwodnItemsAsync() {
+  var seletceeddd = 'All Roles';
+  getDropdownItemsAsync1() {
+    return Theme(
+        data: ThemeData(
+            canvasColor: Colors.white, brightness: Brightness.values[0]),
+        child: DropdownButton(
+          style: TextStyle(),
+          hint: getStyle(),
+          items: <DropdownMenuItem<String>>[
+            new DropdownMenuItem(
+                child: Text('one', style: TextStyle(color: Colors.black)),
+                value: 'one'),
+            new DropdownMenuItem(
+                child: new Text('two', style: TextStyle(color: Colors.black)),
+                value: 'two'),
+          ],
+          onChanged: (value) {
+            print(value);
+            seletceeddd = value;
+            setState(() {});
+          },
+        ));
+  }
+
+  getStyle() {
+    return new Text(
+      seletceeddd,
+      style: TextStyle(color: Colors.white),
+    );
+  }
+
+  getDropdownItemsAsync() {
     return new StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection("leaderboard").snapshots(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return DropdownButton(
-              items: list,
-              value: selected,
-              onChanged: (value) {
-                selected = value;
-                setState(() {});
-              },
-            );
+//          if (!snapshot.hasData)
+//            return DropdownButton(
+//              items: list,
+//              value: selected,
+//              onChanged: (value) {
+//                selected = value;
+//                setState(() {});
+//              },
+//            );
 
           var length = snapshot.data.documents.length;
-          print('Lenght >>>>>> $length');
+          //print('Lenght >>>>>> $length');
           DocumentSnapshot ds = snapshot.data.documents[length - 1];
           String leaderBoardData = ds['complexobject'];
-          List leaderboards = json.decode(leaderBoardData);
+          leaderboards = json.decode(leaderBoardData);
+          //print(leaderboards);
           List<LeaderBoardInstance> lis = [];
           for (Map<String, dynamic> leaderboard in leaderboards) {
             LeaderBoardInstance li = LeaderBoardInstance.fromJson(leaderboard);
@@ -64,69 +99,51 @@ class LeaderboardState extends State<Leaderboard> {
           List<DropdownMenuItem<String>> lidms = [];
           for (LeaderBoardInstance li in lis) {
             lidms.add(DropdownMenuItem(
-              child: Text(li.name),
+              child: Text(
+                li.name,
+                style: TextStyle(color: Colors.white),
+              ),
               value: li.name,
             ));
           }
-          print('New list has now been pulled from firebase $lidms');
-
-          print('Leaderboard type is >>>>>>>>>' +
-              leaderboards[0].runtimeType.toString());
-          return DropdownButton(
-            items: lidms,
-            value: selected,
-            onChanged: (value) {
-              selected = value;
-              setState(() {});
-            },
+//         print('New list has now been pulled from firebase $lidms');
+//
+//          print('Leaderboard type is >>>>>>>>>' +
+//              leaderboards[0].runtimeType.toString());
+          return Container(
+            margin: EdgeInsets.only(right: 15.0, top: 16.0),
+            child: DropdownButton(
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w300,
+              ),
+              isDense: true,
+              items: lidms,
+              value: selected,
+              onChanged: (value) {
+                selected = value;
+                setState(() {});
+              },
+            ),
           );
-          /*return new DropdownButton(
-              items: snapshot.data.documents.map((DocumentSnapshot document) {
-                return DropdownMenuItem(child: new Text(document.documentID));
-              }).toList(),
-              onChanged: (dynamic) {},
-              hint: new Text("Join a Team"),
-              value: 'na');*/
         });
   }
 
   getLeaderboardNew() {
-    return new ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text('Something'),
-        )
-      ],
+    if (selected == 'Demo Content') {
+      return getdemocontent();
+    } else if (selected == 'All Roles') {
+      return getallroles();
+    }
+  }
+
+  getdemocontent() {
+    return ListView(
+      children: <Widget>[],
     );
   }
 
-  getLeaderboard() {
-    return StreamBuilder(
-        stream: Firestore.instance.collection('leaderboard').snapshots(),
-        builder: (context, snapshot) {
-          //print(snapshot.hasData);
-          return ListView.builder(
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot board = snapshot.data.documents[index];
-                var complexobjectString = board.data['complexobject'];
-                print(complexobjectString);
-                /*
-
-                List<Map<String, dynamic>> jsons =
-                    jsonDecode(complexobjectString);
-                List<LeaderBoardInstance> string = [];
-                for (Map<String, dynamic> json in jsons) {
-                  string.add(LeaderBoardInstance.fromJson(json));
-                }
-
-                print('$string');
-                for (var i = 0; i < string.length; i++) {
-                  print('Item->' + string[i].toString());
-                }
-                //var points=string['userPoints'];*/
-                //var points=string['userPoints'];*/
-              });
-        });
+  getallroles() {
+    return ListView(children: <Widget>[]);
   }
 }

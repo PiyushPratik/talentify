@@ -4,7 +4,6 @@ import 'package:talentify/Leaderboard.dart';
 
 void main() {
   runApp(home());
-
 }
 
 class home extends StatelessWidget {
@@ -48,7 +47,9 @@ class HomeScreenState extends State<Homescreen> {
                               height: 80.0,
                               child: Image
                                   .asset('assets/images/talentify_logo.png')),
-                          new Divider(height: screenHeight * 0.059, color: Colors.white),
+                          new Divider(
+                              height: screenHeight * 0.059,
+                              color: Colors.white),
                           new Text("TALENTIFY",
                               style: new TextStyle(
                                   color: Color.fromRGBO(165, 165, 165, 10.0),
@@ -86,7 +87,9 @@ class HomeScreenState extends State<Homescreen> {
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold),
                                     ))),
-                            new Divider(height: screenHeight *0.039, color: Colors.white),
+                            new Divider(
+                                height: screenHeight * 0.039,
+                                color: Colors.white),
                             new GestureDetector(
                                 onTap: () => handleLogin(false),
                                 child: new Text("Sign Up",
@@ -95,23 +98,23 @@ class HomeScreenState extends State<Homescreen> {
                                         fontSize: 16.0,
                                         letterSpacing: 1.0,
                                         fontWeight: FontWeight.normal))),
-                            new Divider(height: screenHeight *0.037, color: Colors.white),
+                            new Divider(
+                                height: screenHeight * 0.037,
+                                color: Colors.white),
                           ]))
                 ]))));
   }
 
   void handleLogin(bool isLoginRequired) {
     print('Send to the login screen now $isLoginRequired');
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) {
-        return Leaderboard();
-      }),
-    );
-
-  /*  if (isLoginRequired == true)
+    if (isLoginRequired == true)
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Login();
-      }));
-  */}
+        return Leaderboard();
+      }
+
+//      Navigator.push(context, MaterialPageRoute(builder: (context) {
+//        return Login();
+//      }
+          ));
+  }
 }

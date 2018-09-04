@@ -10,17 +10,17 @@ class DashboardCards {
 
   Widget getDashboardCard() {
     var type = task['itemType'];
-    var status=task['status'];
+    var status = task['status'];
     print('$type');
-    if (type == 'SALES_CALL_TASK' && status=='INCOMPLETE') {
-     // print('hi');
+    if (type == 'SALES_CALL_TASK' && status == 'INCOMPLETE') {
+      // print('hi');
       return getcall();
       // return sales call card
-    } else if (type == 'SALES_PRESENTATION_TASK' && status=='INCOMPLETE') {
+    } else if (type == 'SALES_PRESENTATION_TASK' && status == 'INCOMPLETE') {
       //print('hello');
       return getpresentation();
       //return some other template
-    } else if (type == 'SALES_WEBINAR_TASK' && status=='INCOMPLETE') {
+    } else if (type == 'SALES_WEBINAR_TASK' && status == 'INCOMPLETE') {
       //print('World');
       return getwebinar();
       //return some other template
@@ -29,7 +29,7 @@ class DashboardCards {
 
   getcall() {
     var title = task['title'];
-    var header=task['header'];
+    var header = task['header'];
     print('$title');
     return Stack(
       alignment:
@@ -46,7 +46,11 @@ class DashboardCards {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                      alignment: Alignment.topLeft, child: Text('$header',style: TextStyle(color: Colors.grey,fontSize: 15.0),)),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        '$header',
+                        style: TextStyle(color: Colors.grey, fontSize: 15.0),
+                      )),
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text('$title',
@@ -113,7 +117,7 @@ class DashboardCards {
   }
 
   getpresentation() {
-    var header=task['header'];
+    var header = task['header'];
     var title = task['title'];
     print('$title');
     return Stack(
@@ -133,7 +137,8 @@ class DashboardCards {
                   Container(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        '$header',style: TextStyle(color: Colors.grey,fontSize: 15.0),
+                        '$header',
+                        style: TextStyle(color: Colors.grey, fontSize: 15.0),
                       )),
                   Container(
                     alignment: Alignment.topLeft,
@@ -199,7 +204,7 @@ class DashboardCards {
   }
 
   getwebinar() {
-    var header=task['header'];
+    var header = task['header'];
     var title = task['title'];
     print('$title');
     return Stack(
@@ -217,7 +222,10 @@ class DashboardCards {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                      alignment: Alignment.topLeft, child: Text('$header',style: TextStyle(color: Colors.grey,fontSize: 15.0))),
+                      alignment: Alignment.topLeft,
+                      child: Text('$header',
+                          style:
+                              TextStyle(color: Colors.grey, fontSize: 15.0))),
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
