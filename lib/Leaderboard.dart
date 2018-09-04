@@ -33,41 +33,18 @@ class LeaderboardState extends State<Leaderboard> {
             },
           ),
           title: Text('Leaderboard'),
-          actions: <Widget>[getDropdownItemsAsync1()],
+          actions: <Widget>[getDropdownItemsAsync()],
         ),
         body: getLeaderboardNew(),
       ),
     );
   }
 
-  var seletceeddd = 'All Roles';
-  getDropdownItemsAsync1() {
-    return Theme(
-        data: ThemeData(
-            canvasColor: Colors.white, brightness: Brightness.values[0]),
-        child: DropdownButton(
-          style: TextStyle(),
-          hint: getStyle(),
-          items: <DropdownMenuItem<String>>[
-            new DropdownMenuItem(
-                child: Text('one', style: TextStyle(color: Colors.black)),
-                value: 'one'),
-            new DropdownMenuItem(
-                child: new Text('two', style: TextStyle(color: Colors.black)),
-                value: 'two'),
-          ],
-          onChanged: (value) {
-            print(value);
-            seletceeddd = value;
-            setState(() {});
-          },
-        ));
-  }
-
   getStyle() {
     return new Text(
-      seletceeddd,
-      style: TextStyle(color: Colors.white),
+      selected,
+      style: TextStyle(
+          color: Colors.white, fontWeight: FontWeight.w600, fontSize: 17.0),
     );
   }
 
@@ -75,16 +52,6 @@ class LeaderboardState extends State<Leaderboard> {
     return new StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection("leaderboard").snapshots(),
         builder: (context, snapshot) {
-//          if (!snapshot.hasData)
-//            return DropdownButton(
-//              items: list,
-//              value: selected,
-//              onChanged: (value) {
-//                selected = value;
-//                setState(() {});
-//              },
-//            );
-
           var length = snapshot.data.documents.length;
           //print('Lenght >>>>>> $length');
           DocumentSnapshot ds = snapshot.data.documents[length - 1];
@@ -101,31 +68,28 @@ class LeaderboardState extends State<Leaderboard> {
             lidms.add(DropdownMenuItem(
               child: Text(
                 li.name,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
               value: li.name,
             ));
           }
-//         print('New list has now been pulled from firebase $lidms');
-//
-//          print('Leaderboard type is >>>>>>>>>' +
-//              leaderboards[0].runtimeType.toString());
-          return Container(
-            margin: EdgeInsets.only(right: 15.0, top: 16.0),
-            child: DropdownButton(
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w300,
-              ),
-              isDense: true,
-              items: lidms,
-              value: selected,
-              onChanged: (value) {
-                selected = value;
-                setState(() {});
-              },
-            ),
-          );
+
+          return Theme(
+              data: ThemeData(
+                  canvasColor: Colors.white, brightness: Brightness.values[0]),
+              child: Container(
+                margin: EdgeInsets.only(top: 17.0, right: 10.0),
+                child: DropdownButton(
+                  isDense: true,
+                  hint: getStyle(),
+                  items: lidms,
+                  onChanged: (value) {
+                    print(value);
+                    selected = value;
+                    setState(() {});
+                  },
+                ),
+              ));
         });
   }
 
