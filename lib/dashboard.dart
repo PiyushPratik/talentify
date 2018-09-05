@@ -6,6 +6,8 @@ import 'package:talentify/CustomIcons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talentify/Leaderboard.dart';
 import 'package:talentify/Chatbot.dart';
+import 'repo.dart';
+
 
 class dashboard extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class dashboard extends StatefulWidget {
 
 class dashboardState extends State<dashboard> {
   var count, taskss;
-  var Exp = 0, coins = 0;
+  var Exp = 0, coins = 0,pic;
   double screenHeight, screenWidth;
   var key, studentprof;
   int _currentIndex = 0;
@@ -30,6 +32,7 @@ class dashboardState extends State<dashboard> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(235, 56, 79, 1.0),
+          //leading: ,
           title: Text('$Exp XP'),
           actions: <Widget>[
             IconButton(
@@ -172,6 +175,7 @@ class dashboardState extends State<dashboard> {
                     studentprof = complexobject['studentProfile'];
                     Exp = studentprof['experiencePoints'];
                     coins = studentprof['coins'];
+                    pic=studentprof['profileImage'];
 //                    print('$Exp');
 //                    Exp=complexobject['studentProfile'];
 //                    var Expp=studentProfile['experiencePoints'];
@@ -204,7 +208,7 @@ class dashboardState extends State<dashboard> {
 
   getRepoBody() {
     return Scaffold(
-      body: Text('Loading Repository'),
+      body: repo(),
     );
   }
 

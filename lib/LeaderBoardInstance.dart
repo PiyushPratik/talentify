@@ -19,18 +19,18 @@ class LeaderBoardInstance {
 }
 
 class AllStudentRanks {
-  List<AllStudentRank> allStudentRanks;
+  List<AllStudentRank> allStudentRanks=[];
   //todo
   AllStudentRanks.fromJson(List<dynamic> json) {
     for(Map<String, dynamic> roles in json){
-      print(roles['name']);
-      print(roles['batchRank']);
-      print(roles['points']);
+      AllStudentRank le = AllStudentRank.fromJson(roles);
+      allStudentRanks.add(le);
+//      print(le.name);
+//      print(le.coins);
     }
     //todo
   }
 }
-
 class AllStudentRank {
   int batchRank;
   int coins;

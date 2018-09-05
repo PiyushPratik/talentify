@@ -14,9 +14,8 @@ class Leaderboard extends StatefulWidget {
 class LeaderboardState extends State<Leaderboard> {
   var type;
   List leaderboards;
-  List<DropdownMenuItem<String>> list = [];
+  List<LeaderBoardInstance> lis = [];
   String selected = 'All Roles';
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,19 +51,23 @@ class LeaderboardState extends State<Leaderboard> {
     return new StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection("leaderboard").snapshots(),
         builder: (context, snapshot) {
-          var length = snapshot.data.documents.length;
           //print('Lenght >>>>>> $length');
-          DocumentSnapshot ds = snapshot.data.documents[length - 1];
-          String leaderBoardData = ds['complexobject'];
+          if (!snapshot.hasData) {
+            return Text('Loading');
+          }
+          var length = snapshot.data.documents.length;
+          DocumentSnapshot snap = snapshot.data.documents[length - 1];
+          String leaderBoardData = snap['complexobject'];
           leaderboards = json.decode(leaderBoardData);
           //print(leaderboards);
-          List<LeaderBoardInstance> lis = [];
+          lis.clear();
           for (Map<String, dynamic> leaderboard in leaderboards) {
             LeaderBoardInstance li = LeaderBoardInstance.fromJson(leaderboard);
             lis.add(li);
           }
           List<DropdownMenuItem<String>> lidms = [];
           for (LeaderBoardInstance li in lis) {
+            //print(li.allStudentRanks);
             lidms.add(DropdownMenuItem(
               child: Text(
                 li.name,
@@ -73,18 +76,16 @@ class LeaderboardState extends State<Leaderboard> {
               value: li.name,
             ));
           }
-
           return Theme(
               data: ThemeData(
                   canvasColor: Colors.white, brightness: Brightness.values[0]),
               child: Container(
-                margin: EdgeInsets.only(top: 17.0, right: 10.0),
+                margin: EdgeInsets.only(top: 16.0, right: 10.0),
                 child: DropdownButton(
                   isDense: true,
                   hint: getStyle(),
                   items: lidms,
                   onChanged: (value) {
-                    print(value);
                     selected = value;
                     setState(() {});
                   },
@@ -94,20 +95,47 @@ class LeaderboardState extends State<Leaderboard> {
   }
 
   getLeaderboardNew() {
-    if (selected == 'Demo Content') {
-      return getdemocontent();
-    } else if (selected == 'All Roles') {
-      return getallroles();
+    if (lis.length == 0)
+      return Text('loading...');
+    else {
+      LeaderBoardInstance selectedLeaderBoardInstance = null;
+      for (LeaderBoardInstance li in lis) {
+        if (li.name == selected) {
+          selectedLeaderBoardInstance = li;
+          break;
+        }
+      }
+      if (selectedLeaderBoardInstance != null) {
+        //fetch the selected value and change the xcodew accordingly
+        List<AllStudentRank> asr =
+            selectedLeaderBoardInstance.allStudentRanks.allStudentRanks;
+        return ListView.builder(
+          itemBuilder: (BuildContext context, int index) => Container(
+                child: ListTile(
+                  leading: Image.network(
+                    asr[index].imageURL,
+                    height: 30.0,
+                  ),
+                  title: Text(asr[index].name),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(right: 30.0),
+                        child: Text(asr[index].batchRank.toString()),
+                      ),
+                      Container(
+                        child: Text(asr[index].points.toString()),
+                      ),
+                    ],
+                  ),
+                ),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black))),),
+          itemCount: asr.length,
+        );
+      } else {
+        return Text('loading...');
+      }
     }
-  }
-
-  getdemocontent() {
-    return ListView(
-      children: <Widget>[],
-    );
-  }
-
-  getallroles() {
-    return ListView(children: <Widget>[]);
   }
 }
