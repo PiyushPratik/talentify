@@ -110,27 +110,40 @@ class LeaderboardState extends State<Leaderboard> {
         List<AllStudentRank> asr =
             selectedLeaderBoardInstance.allStudentRanks.allStudentRanks;
         return ListView.builder(
-          itemBuilder: (BuildContext context, int index) => Container(
-                child: ListTile(
-                  leading: Image.network(
-                    asr[index].imageURL,
-                    height: 30.0,
-                  ),
-                  title: Text(asr[index].name),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(right: 30.0),
-                        child: Text(asr[index].batchRank.toString()),
-                      ),
-                      Container(
-                        child: Text(asr[index].points.toString()),
-                      ),
-                    ],
-                  ),
+          itemBuilder: (BuildContext context, int index) => Column(
+            children: <Widget>[
+              ListTile(
+                title: Row(
+                  children: <Widget>[
+                    Column(),
+                  ],
                 ),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black))),),
+              ),
+            ListTile(
+              leading: Image.network(
+            asr[index].imageURL,
+            height: 30.0,
+          ),
+              title: Text(asr[index].name),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(right: 30.0),
+                    child: Text(asr[index].batchRank.toString()),
+                  ),
+                  Container(
+                    child: Text(asr[index].points.toString()),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(right: 20.0,left: 20.0),
+              child: Divider(height: 3.0,color: Colors.black),
+            )
+            ],
+          ),
           itemCount: asr.length,
         );
       } else {
