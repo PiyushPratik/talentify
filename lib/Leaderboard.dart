@@ -112,18 +112,11 @@ class LeaderboardState extends State<Leaderboard> {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) => Column(
             children: <Widget>[
-              ListTile(
-                title: Row(
-                  children: <Widget>[
-                    Column(),
-                  ],
-                ),
-              ),
             ListTile(
               leading: Image.network(
-            asr[index].imageURL,
-            height: 30.0,
-          ),
+                asr[index].imageURL,
+                height: 30.0,
+              ),
               title: Text(asr[index].name),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
