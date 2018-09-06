@@ -11,17 +11,14 @@ class DashboardCards {
   Widget getDashboardCard() {
     var type = task['itemType'];
     var status = task['status'];
-    print('$type');
+   // print('$type');
     if (type == 'SALES_CALL_TASK' && status == 'INCOMPLETE') {
-      // print('hi');
       return getcall();
       // return sales call card
     } else if (type == 'SALES_PRESENTATION_TASK' && status == 'INCOMPLETE') {
-      //print('hello');
       return getpresentation();
       //return some other template
     } else if (type == 'SALES_WEBINAR_TASK' && status == 'INCOMPLETE') {
-      //print('World');
       return getwebinar();
       //return some other template
     }
@@ -30,7 +27,7 @@ class DashboardCards {
   getcall() {
     var title = task['title'];
     var header = task['header'];
-    print('$title');
+   // print('$title');
     return Stack(
       alignment:
           Alignment(Alignment.bottomCenter.x, Alignment.bottomCenter.y - 0.22),
@@ -119,7 +116,7 @@ class DashboardCards {
   getpresentation() {
     var header = task['header'];
     var title = task['title'];
-    print('$title');
+    //print('$title');
     return Stack(
       alignment:
           Alignment(Alignment.bottomCenter.x, Alignment.bottomCenter.y - 0.22),
@@ -206,7 +203,7 @@ class DashboardCards {
   getwebinar() {
     var header = task['header'];
     var title = task['title'];
-    print('$title');
+   // print('$title');
     return Stack(
       alignment:
           Alignment(Alignment.bottomCenter.x, Alignment.bottomCenter.y - 0.22),

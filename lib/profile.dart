@@ -14,7 +14,7 @@ class profile extends StatefulWidget {
 class profilestate extends State<profile> {
   var screenHeight, screenWidth;
   var Selected = 'Performance';
-  var studentprof, key, name, rank, badges, ba, batchhh;
+  var studentprof, key, name, rank, badges;
   var Exp = 0, coins = 0, pic = null;
   pro lis;
   List lisss = [];
@@ -31,8 +31,7 @@ class profilestate extends State<profile> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => dashboard()));
+              Navigator.pop(context);
             },
           ),
           title: Text('My Profile'),
@@ -195,17 +194,23 @@ class profilestate extends State<profile> {
             itemBuilder: (BuildContext context, int index) => Row(
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(right: 10.0,left: 10.0,top: 80.0),
-                      child: Column(
-                        children: <Widget>[
-                          Image.network(lisss[index].image,width: 80.0,),
-                          Text(
-                            lisss[index].title,
-                            style: TextStyle(fontSize: 15.0),
-                          ),
-                        ],
-                      )
-                    ),
+                        padding:
+                            EdgeInsets.only(right: 10.0, left: 10.0, top: 75.0),
+                        child: Column(
+                          children: <Widget>[
+                            Image.network(
+                              lisss[index].image,
+                              width: 80.0,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                lisss[index].title,
+                                style: TextStyle(fontSize: 15.0),
+                              ),
+                            )
+                          ],
+                        )),
                   ],
                 ),
           ),

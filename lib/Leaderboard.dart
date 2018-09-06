@@ -26,9 +26,7 @@ class LeaderboardState extends State<Leaderboard> {
           leading: IconButton(
             icon: new Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return dashboard();
-              }));
+              Navigator.pop(context);
             },
           ),
           title: Text('Leaderboard'),

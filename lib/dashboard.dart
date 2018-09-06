@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talentify/Leaderboard.dart';
 import 'package:talentify/Chatbot.dart';
 import 'repo.dart';
-
+import 'profile.dart';
 
 class dashboard extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class dashboard extends StatefulWidget {
 
 class dashboardState extends State<dashboard> {
   var count, taskss;
-  var Exp = 0, coins = 0,pic;
+  var Exp = 0, coins = 0,pic=null;
   double screenHeight, screenWidth;
   var key, studentprof;
   int _currentIndex = 0;
@@ -32,7 +32,9 @@ class dashboardState extends State<dashboard> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(235, 56, 79, 1.0),
-          //leading: ,
+          leading:IconButton(padding: EdgeInsets.only(right: 0.0,top: 8.0,left: 15.0,bottom: 8.0),icon: Image.network('$pic'), onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> profile()));
+          }),
           title: Text('$Exp XP'),
           actions: <Widget>[
             IconButton(
@@ -66,7 +68,7 @@ class dashboardState extends State<dashboard> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (curre) {
-            print('Current Index:$curre');
+            //print('Current Index:$curre');
             setState(() {
               _currentIndex = curre;
             });
@@ -180,12 +182,13 @@ class dashboardState extends State<dashboard> {
 //                    Exp=complexobject['studentProfile'];
 //                    var Expp=studentProfile['experiencePoints'];
                     count = taskss.length;
-                    print('$count');
+                    //print('$count');
                     return PageView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: count, //add the length of your list here
                         itemBuilder: (BuildContext context, int index) {
                           var task = taskss[index];
+                          //print(task);
                           return DashboardCards(task).getDashboardCard();
                         });
                   });

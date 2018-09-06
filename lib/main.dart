@@ -108,13 +108,13 @@ class HomeScreenState extends State<Homescreen> {
   void handleLogin(bool isLoginRequired) {
     print('Send to the login screen now $isLoginRequired');
     if (isLoginRequired == true)
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Leaderboard();
-      }
-
 //      Navigator.push(context, MaterialPageRoute(builder: (context) {
-//        return Login();
+//        return Leaderboard();
 //      }
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Login();
+      }
           ));
   }
 }
