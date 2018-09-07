@@ -108,7 +108,7 @@ class LeaderboardState extends State<Leaderboard> {
         List<AllStudentRank> asr =
             selectedLeaderBoardInstance.allStudentRanks.allStudentRanks;
         return ListView.builder(
-          itemBuilder: (BuildContext context, int index) => Column(
+          itemBuilder: (BuildContext context, int index) => Row(
             children: <Widget>[
             ListTile(
               leading: Image.network(

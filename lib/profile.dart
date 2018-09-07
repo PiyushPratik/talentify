@@ -3,7 +3,7 @@ import 'dashboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'login.dart';
 class profile extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -37,15 +37,23 @@ class profilestate extends State<profile> {
           title: Text('My Profile'),
           actions: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 20.0, right: 35.0),
+                child: FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Login();
+                }));
+              },
               child: Text(
                 'LOG OUT',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                    color: Colors.white),
               ),
-            )
+            ))
           ],
         ),
-        body: getperbody(),
+        body: getbody(),
       ),
     );
   }
@@ -59,9 +67,14 @@ class profilestate extends State<profile> {
     });
   }
 
-//  getbody() {
-//      return getperbody();
-//  }
+  getbody() {
+    if(Selected=='Performance'){
+      return getperbody();
+    }else{
+      return Text('Loading');
+    }
+
+  }
   getperbody() {
     return new StreamBuilder(
         stream: Firestore.instance.collection('$key').snapshots(),
@@ -99,25 +112,29 @@ class profilestate extends State<profile> {
       lis = pro.fromjson(prrofi);
       lisss.add(lis);
     }
-//    List<pro> li=[];
-//    for(pro los in lisss){
-//      //li.add(lis.title);
-//    }
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(top: screenHeight * 0.02),
+          margin: EdgeInsets.only(top: screenHeight * 0.008),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(
-                'Performance',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
+              FlatButton(
+                onPressed: () {
+                  print('Performance');
+                },
+                child: Text(
+                  'Performance',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
+                ),
               ),
-              Container(
-                color: Colors.white,
-                margin: EdgeInsets.only(left: 80.0),
-                child: GestureDetector(
+              FlatButton(
+                onPressed: () {
+                  print('Account Settings');
+                },
+                child: Container(
+                  color: Colors.white,
+                  margin: EdgeInsets.only(left: 80.0),
                   child: Text(
                     'Account Settings',
                     style: TextStyle(
@@ -153,7 +170,14 @@ class profilestate extends State<profile> {
               ),
               Column(
                 children: <Widget>[
-                  Image.network(pic, height: screenHeight * 0.17),
+                  Container(
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(pic),maxRadius: 60.0,
+                    ),
+                    height: screenHeight * 0.19,
+                  ),
+
+//                  Image.network(pic, height: screenHeight * 0.17),
                   Container(
                     padding: EdgeInsets.only(top: 8.0),
                     child: Text(
@@ -183,11 +207,11 @@ class profilestate extends State<profile> {
           ),
         ),
         Divider(
-          height: screenHeight * 0.08,
+          height: screenHeight * 0.07,
           color: Colors.white,
         ),
         Container(
-          height: screenHeight * 0.35,
+          height: screenHeight * 0.30,
           color: Color.fromRGBO(234, 237, 242, 1.0),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -195,12 +219,12 @@ class profilestate extends State<profile> {
                   children: <Widget>[
                     Container(
                         padding:
-                            EdgeInsets.only(right: 10.0, left: 10.0, top: 75.0),
+                            EdgeInsets.only(right: 10.0, left: 10.0, top: 55.0),
                         child: Column(
                           children: <Widget>[
                             Image.network(
                               lisss[index].image,
-                              width: 80.0,
+                              width: 60.0,
                             ),
                             Container(
                               padding: EdgeInsets.only(top: 8.0),

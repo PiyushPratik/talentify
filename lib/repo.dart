@@ -28,13 +28,14 @@ class repostate extends State<repo> {
                   DocumentSnapshot ds = snapshot.data.documents[length - 1];
                   String repodata = ds['complexobject'];
                   var repodatas = json.decode(repodata);
-                 // print(repodatas);
-                  return Container(
-                    child: Text(''),
-                  );
+                  //print(repodatas);
+                  return getrepobody();
                 })
-
         ),
     );
+  }
+
+  getrepobody(){
+    return Text('') ;
   }
 }
