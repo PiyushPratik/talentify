@@ -211,15 +211,24 @@ class profilestate extends State<profile> {
           color: Colors.white,
         ),
         Container(
+          color: Color.fromRGBO(234, 237, 242, 1.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text('Badges',style: TextStyle(fontSize: 15.0),),
+            ],
+          ),
+        ),
+        Container(
           height: screenHeight * 0.30,
           color: Color.fromRGBO(234, 237, 242, 1.0),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemBuilder: (BuildContext context, int index) => Row(
+            itemBuilder: (BuildContext context, int index) => Column(
                   children: <Widget>[
                     Container(
                         padding:
-                            EdgeInsets.only(right: 10.0, left: 10.0, top: 55.0),
+                            EdgeInsets.only(right: 10.0, left: 10.0, top: 50.0),
                         child: Column(
                           children: <Widget>[
                             Image.network(
@@ -237,6 +246,7 @@ class profilestate extends State<profile> {
                         )),
                   ],
                 ),
+            itemCount: lisss.length,
           ),
         )
       ],

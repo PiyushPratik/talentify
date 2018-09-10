@@ -1,3 +1,4 @@
+import 'package:talentify/poly/polygon_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
@@ -32,7 +33,7 @@ class dashboardState extends State<dashboard> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(235, 56, 79, 1.0),
-          leading:IconButton(padding: EdgeInsets.only(right: 0.0,top: 8.0,left: 15.0,bottom: 8.0),icon: Image.network('$pic'), onPressed: (){
+          leading:IconButton(padding: EdgeInsets.only(right: 0.0,top: 8.0,left: 15.0,bottom: 8.0),icon: customHexagonalImage(), onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> profile()));
           }),
           title: Text('$Exp XP'),
@@ -135,6 +136,20 @@ class dashboardState extends State<dashboard> {
       key = keey;
     });
   }
+customHexagonalImage(){
+  return new ClipPolygon(
+    sides: 6,
+    borderRadius: 3.0, // Default 0.0 degrees
+    rotate: 90.0, // Default 0.0 degrees
+    boxShadows: [
+      new PolygonBoxShadow(color: Colors.white, elevation: 1.0),
+      new PolygonBoxShadow(color: Colors.grey, elevation: 5.0)
+    ],
+    child: Image.network('$pic'),
+  );
+
+
+}
 
   getBody() {
     if (_currentIndex == 0) {
