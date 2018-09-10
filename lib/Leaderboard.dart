@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'LeaderBoardInstance.dart';
-import 'dashboard.dart';
 import 'dart:async';
-void main() {
-  runApp(Leaderboard());
-}
+
 class Leaderboard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

@@ -215,7 +215,10 @@ class profilestate extends State<profile> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text('Badges',style: TextStyle(fontSize: 15.0),),
+              Container(
+                padding: EdgeInsets.only(left: screenHeight * 0.015,top: screenHeight * 0.001),
+                child: Text('Badges',style: TextStyle(fontSize: 16.0),),
+              )
             ],
           ),
         ),

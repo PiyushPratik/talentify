@@ -3,7 +3,6 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:talentify/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:async';
 
 class Login extends StatefulWidget {
   @override
