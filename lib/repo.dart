@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
+import 'repoinstance.dart';
 
 class repo extends StatefulWidget {
   @override
@@ -10,6 +11,8 @@ class repo extends StatefulWidget {
 }
 
 class repostate extends State<repo> {
+  List<repoinstance> value = [];
+  repoinstance li;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,8 +28,19 @@ class repostate extends State<repo> {
                 DocumentSnapshot ds = snapshot.data.documents[length - 1];
                 String repodata = ds['complexobject'];
                 var repodatas = json.decode(repodata);
-               // print(repodatas);
-                return Text('');
+                var data = repodatas['data'];
+                value.clear();
+                for (Map<String,dynamic> datas in data) {
+                  li = repoinstance.fromjson(datas);
+                  value.add(li);
+                  //print(li.dirName);
+                }
+                return ListView.builder(itemBuilder: (BuildContext context, int index)=>
+               Card(
+                 child: ListTile(
+                   title: Text(li[index].dirName),
+                 ),
+               ));
               })),
     );
   }

@@ -55,22 +55,17 @@ class LeaderboardState extends State<Leaderboard> {
     s.listen((querySnapshot) {
       List<DocumentSnapshot> docs = querySnapshot.documents;
       print(docs.length);
-      querySnapshot.documents.forEach((doc)
-          {
-            String leaderBoardData = doc['complexobject'];
-            leaderboards = json.decode(leaderBoardData);
-            //print(leaderboards);
-            lis.clear();
-            for (Map<String, dynamic> leaderboard in leaderboards) {
-              LeaderBoardInstance li = LeaderBoardInstance.fromJson(leaderboard);
-              lis.add(li);
-            }
-            setState(() {
-
-            });
-          });
-
-
+      querySnapshot.documents.forEach((doc) {
+        String leaderBoardData = doc['complexobject'];
+        leaderboards = json.decode(leaderBoardData);
+        //print(leaderboards);
+        lis.clear();
+        for (Map<String, dynamic> leaderboard in leaderboards) {
+          LeaderBoardInstance li = LeaderBoardInstance.fromJson(leaderboard);
+          lis.add(li);
+        }
+        setState(() {});
+      });
     });
     super.initState();
   }
@@ -123,9 +118,8 @@ class LeaderboardState extends State<Leaderboard> {
           itemBuilder: (BuildContext context, int index) => Column(
                 children: <Widget>[
                   ListTile(
-                    leading: Image.network(
-                      asr[index].imageURL,
-                      height: 30.0,
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage( asr[index].imageURL),
                     ),
                     title: Text(asr[index].name),
                     trailing: Row(

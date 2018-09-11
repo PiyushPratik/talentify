@@ -139,11 +139,11 @@ class dashboardState extends State<dashboard> {
 customHexagonalImage(){
   return new ClipPolygon(
     sides: 6,
-    borderRadius: 3.0, // Default 0.0 degrees
+    borderRadius: 1.0, // Default 0.0 degrees
     rotate: 90.0, // Default 0.0 degrees
     boxShadows: [
       new PolygonBoxShadow(color: Colors.white, elevation: 1.0),
-      new PolygonBoxShadow(color: Colors.grey, elevation: 5.0)
+      new PolygonBoxShadow(color: Colors.white, elevation: 1.0)
     ],
     child: Image.network('$pic'),
   );

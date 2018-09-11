@@ -117,16 +117,18 @@ class profilestate extends State<profile> {
         Container(
           margin: EdgeInsets.only(top: screenHeight * 0.008),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               FlatButton(
                 onPressed: () {
                   print('Performance');
                 },
-                child: Text(
-                  'Performance',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
-                ),
+                child: Container(
+                  padding: EdgeInsets.only(left: screenWidth * 0.06),
+                  child: Text(
+                    'Performance',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
+                  ),
+                )
               ),
               FlatButton(
                 onPressed: () {
@@ -134,7 +136,7 @@ class profilestate extends State<profile> {
                 },
                 child: Container(
                   color: Colors.white,
-                  margin: EdgeInsets.only(left: 80.0),
+                  padding: EdgeInsets.only(left: screenWidth * 0.25),
                   child: Text(
                     'Account Settings',
                     style: TextStyle(
@@ -175,6 +177,7 @@ class profilestate extends State<profile> {
                       backgroundImage: NetworkImage(pic),maxRadius: 60.0,
                     ),
                     height: screenHeight * 0.19,
+                    width: screenWidth * 0.32,
                   ),
 
 //                  Image.network(pic, height: screenHeight * 0.17),
@@ -223,7 +226,7 @@ class profilestate extends State<profile> {
           ),
         ),
         Container(
-          height: screenHeight * 0.30,
+          height: screenHeight * 0.27,
           color: Color.fromRGBO(234, 237, 242, 1.0),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -231,7 +234,7 @@ class profilestate extends State<profile> {
                   children: <Widget>[
                     Container(
                         padding:
-                            EdgeInsets.only(right: 10.0, left: 10.0, top: 50.0),
+                            EdgeInsets.only(right: 10.0, left: 8.0, top: 40.0),
                         child: Column(
                           children: <Widget>[
                             Image.network(
