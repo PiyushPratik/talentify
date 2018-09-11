@@ -30,18 +30,26 @@ class repostate extends State<repo> {
                 var repodatas = json.decode(repodata);
                 var data = repodatas['data'];
                 value.clear();
-                for (Map<String,dynamic> datas in data) {
+                for (Map<String, dynamic> datas in data) {
                   li = repoinstance.fromjson(datas);
                   value.add(li);
-                  //print(li.dirName);
+                  print(li.dirName);
+                  print(value.length);
                 }
-                return ListView.builder(itemBuilder: (BuildContext context, int index)=>
-               Card(
-                 child: ListTile(
-                   title: Text(li[index].dirName),
-                 ),
-               ));
+                return getrepobody();
               })),
     );
+  }
+
+  getrepobody() {
+    return ListView.builder(
+        itemCount: value.length,
+        itemBuilder: (BuildContext context, int index) => Card(
+              child: ListTile(
+                leading: Icon(Icons.folder),
+                title: Text(value[index].dirName),
+                trailing: Text(value[index].file.length),
+              ),
+            ));
   }
 }

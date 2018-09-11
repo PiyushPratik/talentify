@@ -119,7 +119,7 @@ class LeaderboardState extends State<Leaderboard> {
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage( asr[index].imageURL),
+                      backgroundImage: NetworkImage(asr[index].imageURL),
                     ),
                     title: Text(asr[index].name),
                     trailing: Row(
