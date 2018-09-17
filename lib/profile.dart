@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -135,7 +134,7 @@ class profilestate extends State<profile> {
                   print('Account Settings');
                 },
                 child: Container(
-                  color: Colors.white,
+                  color: Colors.transparent,
                   padding: EdgeInsets.only(left: screenWidth * 0.25),
                   child: Text(
                     'Account Settings',
@@ -210,7 +209,7 @@ class profilestate extends State<profile> {
           ),
         ),
         Divider(
-          height: screenHeight * 0.07,
+          height: screenHeight * 0.1,
           color: Colors.white,
         ),
         Container(

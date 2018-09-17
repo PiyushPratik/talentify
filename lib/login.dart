@@ -161,8 +161,8 @@ class LoginState extends State<Login> {
                                         height: screenHeight * 0.02,
                                       )),
                                 new Container(
-                                    width: screenWidth - 30,
-                                    height: screenHeight * 0.07,
+                                    width: screenWidth * 1,
+                                    height: screenHeight * 0.08,
                                     child: new RaisedButton(
                                         shape: new RoundedRectangleBorder(
                                             borderRadius:

@@ -53,12 +53,10 @@ class LeaderboardState extends State<Leaderboard> {
     s.listen((querySnapshot) =>
         querySnapshot.documents.forEach((doc) => print(doc["title"])));
     s.listen((querySnapshot) {
-      List<DocumentSnapshot> docs = querySnapshot.documents;
-      print(docs.length);
+      //List<DocumentSnapshot> docs = querySnapshot.documents;
       querySnapshot.documents.forEach((doc) {
         String leaderBoardData = doc['complexobject'];
         leaderboards = json.decode(leaderBoardData);
-        //print(leaderboards);
         lis.clear();
         for (Map<String, dynamic> leaderboard in leaderboards) {
           LeaderBoardInstance li = LeaderBoardInstance.fromJson(leaderboard);
@@ -114,34 +112,109 @@ class LeaderboardState extends State<Leaderboard> {
         //fetch the selected value and change the xcodew accordingly
         List<AllStudentRank> asr =
             selectedLeaderBoardInstance.allStudentRanks.allStudentRanks;
-        return ListView.builder(
-          itemBuilder: (BuildContext context, int index) => Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(asr[index].imageURL),
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          verticalDirection: VerticalDirection.down,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.only(top: 40.0),
+                        height: 80.0,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(asr[1].imageURL),
+                          radius: 40.0,
+                        )),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 20.0,
                     ),
-                    title: Text(asr[index].name),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(right: 30.0),
-                          child: Text(asr[index].batchRank.toString()),
-                        ),
-                        Container(
-                          child: Text(asr[index].points.toString()),
-                        ),
-                      ],
+                    Text(
+                      asr[1].name,
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(right: 20.0, left: 20.0),
-                    child: Divider(height: 3.0, color: Colors.black),
-                  )
-                ],
-              ),
-          itemCount: asr.length,
+                    Text(
+                      asr[1].points.toString(),
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.only(top: 20.0),
+                        height: 90.0,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(asr[0].imageURL),
+                          radius: 45.0,
+                        )),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 20.0,
+                    ),
+                    Text(
+                      asr[0].name,
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    Text(
+                      asr[0].points.toString(),
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.only(top: 50.0),
+                        height: 70.0,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(asr[2].imageURL),
+                          radius: 35.0,
+                        )),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 20.0,
+                    ),
+                    Text(
+                      asr[2].name,
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    Text(
+                      asr[2].points.toString(),
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.black,
+              height: 20.0,
+            ),
+          ]
         );
       } else {
         return Text('loading...');

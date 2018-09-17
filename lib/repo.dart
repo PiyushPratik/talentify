@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'repoinstance.dart';
 import 'newwindow.dart';
-import 'dart:math';
 
 class repo extends StatefulWidget {
   @override
@@ -24,7 +23,7 @@ class repostate extends State<repo> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.black12,
+        backgroundColor: Color.fromRGBO(244, 246, 249, 10.0),
           body: new StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance.collection("Repo").snapshots(),
               builder: (context, snapshot) {
@@ -71,9 +70,7 @@ class repostate extends State<repo> {
         itemBuilder: (BuildContext context, int index) => FlatButton(
             padding: EdgeInsets.only(left: 4.0, right: 4.0),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                window();
-              }));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> window()));
             },
             child: Card(
               child: ListTile(
@@ -87,9 +84,9 @@ class repostate extends State<repo> {
                   child: Text(
                     value[index].file.file.length.toString(),
                     style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.w400),
+                        color: Colors.red, fontWeight: FontWeight.w500),
                   ),
-                  backgroundColor: Colors.black26,
+                  backgroundColor:Color.fromRGBO(244, 246, 249, 10.0),
                   radius: 17.0,
                 ),
               ),
