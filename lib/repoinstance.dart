@@ -1,15 +1,15 @@
-class repoinstance {
-  Repo file;
+class folder {
+  Filelist file;
   String dirName;
-  repoinstance.fromjson(Map json) {
+  folder.fromjson(Map json) {
     this.dirName = json['dirName'];
-    this.file = Repo.fromjson(json['files']);
+    this.file = Filelist.fromjson(json['files']);
   }
 }
 
-class Repo {
+class Filelist {
   List<files> file = [];
-  Repo.fromjson(List<dynamic> json) {
+  Filelist.fromjson(List<dynamic> json) {
     for (Map<String, dynamic> File in json) {
       files lis = files.fromjson(File);
       file.add(lis);

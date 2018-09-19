@@ -64,7 +64,7 @@ class dashboardState extends State<dashboard> {
               child: IconButton(
                 icon: Icon(Icons.notifications, size: 30.0),
                 onPressed: () {
-                  print('Notification Icon pressed');
+                  print('notification');
                 },
               ),
             )

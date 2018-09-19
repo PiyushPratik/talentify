@@ -135,7 +135,7 @@ class profilestate extends State<profile> {
                 },
                 child: Container(
                   color: Colors.transparent,
-                  padding: EdgeInsets.only(left: screenWidth * 0.25),
+                  padding: EdgeInsets.only(left: screenWidth * 0.16),
                   child: Text(
                     'Account Settings',
                     style: TextStyle(

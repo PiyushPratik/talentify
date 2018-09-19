@@ -21,7 +21,29 @@ class DashboardCards {
     } else if (type == 'SALES_WEBINAR_TASK' && status == 'INCOMPLETE') {
       return getwebinar();
       //return some other template
+    }else{
+      return blankscreen();
     }
+  }
+
+  blankscreen(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text('You don’t have any tasks lined \n up for today.', style: TextStyle(fontSize: 21.0),textAlign: TextAlign.center,),
+        Container(
+          color: Colors.transparent,
+          height: 30.0,
+        ),
+        Image.asset('assets/images/zzz_graphic.png',width: 150.0,),
+        Container(
+          color: Colors.transparent,
+          height: 30.0,
+        ),
+        Text('Get out and have some fun.', style: TextStyle(fontSize: 15.0,color: Colors.black54),textAlign: TextAlign.center,),
+      ],
+    );
   }
 
   getcall() {
