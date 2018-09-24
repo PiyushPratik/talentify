@@ -31,15 +31,15 @@ class DashboardCards {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text('You don’t have any tasks lined \n up for today.', style: TextStyle(fontSize: 21.0),textAlign: TextAlign.center,),
+        Text('You don’t have any tasks lined up \n for today.', style: TextStyle(fontSize: 21.0,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
         Container(
           color: Colors.transparent,
-          height: 30.0,
+          height: 80.0,
         ),
-        Image.asset('assets/images/zzz_graphic.png',width: 150.0,),
+        Image.asset('assets/images/zzz_graphic.png',width: 100.0,),
         Container(
           color: Colors.transparent,
-          height: 30.0,
+          height: 80.0,
         ),
         Text('Get out and have some fun.', style: TextStyle(fontSize: 15.0,color: Colors.black54),textAlign: TextAlign.center,),
       ],

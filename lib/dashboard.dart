@@ -81,6 +81,7 @@ class dashboardState extends State<dashboard> {
           },
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
+              backgroundColor: Colors.white,
               icon: Icon(
                 CustomIcons.tasks_icon,
                 color: _currentIndex == 0 ? Colors.red : Colors.grey,
@@ -91,6 +92,7 @@ class dashboardState extends State<dashboard> {
                   )),
             ),
             BottomNavigationBarItem(
+              backgroundColor: Colors.white,
               icon: Icon(
                 CustomIcons.roles_icon,
                 color: _currentIndex == 1 ? Colors.red : Colors.grey,
@@ -101,6 +103,7 @@ class dashboardState extends State<dashboard> {
                   )),
             ),
             BottomNavigationBarItem(
+                backgroundColor: Colors.white,
                 icon: Icon(
                   CustomIcons.calendar_icon,
                   color: _currentIndex == 2 ? Colors.red : Colors.grey,
@@ -110,6 +113,7 @@ class dashboardState extends State<dashboard> {
                       color: _currentIndex == 2 ? Colors.red : Colors.grey,
                     ))),
             BottomNavigationBarItem(
+                backgroundColor: Colors.white,
                 icon: Icon(
                   CustomIcons.repository,
                   color: _currentIndex == 3 ? Colors.red : Colors.grey,
@@ -119,6 +123,7 @@ class dashboardState extends State<dashboard> {
                       color: _currentIndex == 3 ? Colors.red : Colors.grey,
                     ))),
             BottomNavigationBarItem(
+                backgroundColor: Colors.white,
                 icon: Icon(
                   CustomIcons.chat_icon,
                   color: _currentIndex == 4 ? Colors.red : Colors.grey,
@@ -145,7 +150,7 @@ class dashboardState extends State<dashboard> {
   customHexagonalImage() {
     return new ClipPolygon(
       sides: 6,
-      borderRadius: 1.0, // Default 0.0 degrees
+      borderRadius: 0.0, // Default 0.0 degrees
       rotate: 90.0, // Default 0.0 degrees
       boxShadows: [
         new PolygonBoxShadow(color: Colors.white, elevation: 1.0),

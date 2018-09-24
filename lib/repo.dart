@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'repoinstance.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
 
 class repo extends StatefulWidget {
   @override
@@ -13,96 +14,113 @@ class repo extends StatefulWidget {
 
 class repostate extends State<repo> {
   List<folder> value = [];
+  List<folder> search = [];
   folder li;
   double screenHeight, screenWidth;
   int index;
   @override
   Widget build(BuildContext context) {
+    if (search.length == 0) getDataFromFireBase();
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          backgroundColor: Color.fromRGBO(244, 246, 249, 10.0),
-          body: new StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection("Repo").snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text('Loading');
-                }
-                var length = snapshot.data.documents.length;
-                DocumentSnapshot ds = snapshot.data.documents[length - 1];
-                String repodata = ds['complexobject'];
-                var repodatas = json.decode(repodata);
-                var data = repodatas['data'];
-                value.clear();
-                for (Map<String, dynamic> datas in data) {
-                  li = folder.fromjson(datas);
-                  value.add(li);
-                  // print(li.dirName);
-                  //print(value.length);
-                }
-                return getrepobody();
-              })),
+        backgroundColor: Color.fromRGBO(244, 246, 249, 10.0),
+        body: getrepobody(),
+      ),
     );
   }
 
-//  searchbar() {
-//    return Stack(
-//      children: <Widget>[
-//        Container(
-//          color: Colors.white,
-//          margin: EdgeInsets.only(
-//              left: screenWidth * 0.03,
-//              right: screenWidth * 0.03,
-//              top: screenHeight * 0.01),
-//          child: TextField(),
-//        ),
-//        Container(
-//          padding: EdgeInsets.only(
-//              left: screenWidth * 0.88, top: screenHeight * 0.02),
-//          child: Icon(
-//            Icons.search,
-//            size: 30.0,
-//          ),
-//        )
-//      ],
-//    );
-//  }
+  getDataFromFireBase() {
+    Stream stream = Firestore.instance.collection("Repo").snapshots();
+    stream.listen((data) {
+      DocumentSnapshot ds = data.documents[0];
+      String repodata = ds['complexobject'];
+      var repodatas = json.decode(repodata);
+      var datas = repodatas['data'];
+      search.clear();
+      value.clear();
+      for (Map<String, dynamic> data in datas) {
+        li = folder.fromjson(data);
+       value.add(li);
+       search.add(li);
+      }
+      setState(() {});
+    });
+  }
 
   getrepobody() {
-    return ListView.builder(
-        itemCount: value.length,
-        itemBuilder: (BuildContext context, int index) => Card(
-              margin: EdgeInsets.only(top: 11.0, right: 10.0, left: 10.0),
-              elevation: 5.0,
-              child: ListTile(
-                leading: Icon(
-                  Icons.folder,
-                  size: 40.0,
-                  color: getcolor(index),
-                ),
-                title: Text(
-                  value[index].dirName,
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                trailing: CircleAvatar(
-                  child: Text(
-                    value[index].file.file.length.toString(),
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.w500),
-                  ),
-                  backgroundColor: Color.fromRGBO(244, 246, 249, 10.0),
-                  radius: 17.0,
-                ),
-                onTap: () {
-                  return getOntap(index);
+    return Column(
+      children: <Widget>[
+        Stack(
+          alignment: Alignment(Alignment.bottomCenter.x + 0.9, Alignment.bottomCenter.y - 0.5),
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right:10.0 ,top:10.0 ,left: 10.0),
+              color: Colors.white,
+              child: TextField(
+                decoration: InputDecoration(border: InputBorder.none,hintText: '  Search'),
+                onChanged: (text) {
+                  value.clear();
+                  if (text.length == 0) {
+                    print('No search text');
+                    value.addAll(search);
+                  } else {
+                    for (folder lis in search)
+                      if (lis.dirName.contains(
+                          text.toLowerCase()))
+                        value.add(lis);
+//                    print("Length: " +
+//                        search.length.toString() +
+//                        " count: " +
+//                        value.length.toString());
+                    setState(() {});
+                  }
                 },
               ),
-            ));
+            ),
+            Icon(Icons.search,size: 30.0,color: Colors.black54,)
+          ],
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.only(top: 0.0),
+            itemCount: value.length,
+            itemBuilder: (BuildContext context, int index) => Card(
+                  margin: EdgeInsets.only(top: 15.0, right: 10.0, left: 10.0),
+                  elevation: 5.0,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.folder,
+                      size: 40.0,
+                      color: getcolor(index),
+                    ),
+                    title: Text(
+                      value[index].dirName,
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    trailing: CircleAvatar(
+                      child: Text(
+                        value[index].file.file.length.toString(),
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.w500),
+                      ),
+                      backgroundColor: Color.fromRGBO(244, 246, 249, 10.0),
+                      radius: 17.0,
+                    ),
+                    onTap: () {
+                      return getOntap(index);
+                    },
+                  ),
+                ),
+          ),
+        ),
+      ],
+    );
   }
 
   getOntap(index) {
@@ -197,5 +215,4 @@ class window extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-
 }

@@ -44,6 +44,8 @@ flutter:
   - assets/images/presentaion_task_icon.png
   - assets/images/video_conference.png
   - assets/images/zzz_graphic.png
+  - assets/images/search.png
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
