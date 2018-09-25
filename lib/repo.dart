@@ -18,6 +18,7 @@ class repostate extends State<repo> {
   folder li;
   double screenHeight, screenWidth;
   int index;
+
   @override
   Widget build(BuildContext context) {
     if (search.length == 0) getDataFromFireBase();
@@ -53,35 +54,25 @@ class repostate extends State<repo> {
   getrepobody() {
     return Column(
       children: <Widget>[
-        Stack(
-          alignment: Alignment(Alignment.bottomCenter.x + 0.9, Alignment.bottomCenter.y - 0.5),
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right:10.0 ,top:10.0 ,left: 10.0),
-              color: Colors.white,
-              child: TextField(
-                decoration: InputDecoration(border: InputBorder.none,hintText: '  Search'),
-                onChanged: (text) {
-                  value.clear();
-                  if (text.length == 0) {
-                    print('No search text');
-                    value.addAll(search);
-                  } else {
-                    for (folder lis in search)
-                      if (lis.dirName.contains(
-                          text.toLowerCase()))
-                        value.add(lis);
-//                    print("Length: " +
-//                        search.length.toString() +
-//                        " count: " +
-//                        value.length.toString());
-                    setState(() {});
-                  }
-                },
-              ),
-            ),
-            Icon(Icons.search,size: 30.0,color: Colors.black54,)
-          ],
+        Container(
+          margin: EdgeInsets.only(right:10.0 ,top:10.0 ,left: 10.0,bottom: 5.0),
+          color: Colors.white,
+          child: TextField(
+            decoration: InputDecoration(border: InputBorder.none,hintText: '  Search',suffixIcon: Icon(Icons.search)),
+            onChanged: (text) {
+              value.clear();
+              if (text.length == 0) {
+               // print('No search text');
+                value.addAll(search);
+              } else {
+                for (folder lis in search)
+                  if (lis.dirName.contains(
+                      text.toLowerCase()))
+                    value.add(lis);
+                setState(() {});
+              }
+            },
+          ),
         ),
         Expanded(
           child: ListView.builder(
@@ -122,6 +113,7 @@ class repostate extends State<repo> {
       ],
     );
   }
+
 
   getOntap(index) {
     Navigator.push(context,
