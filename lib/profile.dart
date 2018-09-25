@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login.dart';
+
 class profile extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -67,13 +68,13 @@ class profilestate extends State<profile> {
   }
 
   getbody() {
-    if(Selected=='Performance'){
+    if (Selected == 'Performance') {
       return getperbody();
-    }else{
+    } else {
       return Text('Loading');
     }
-
   }
+
   getperbody() {
     return new StreamBuilder(
         stream: Firestore.instance.collection('$key').snapshots(),
@@ -118,17 +119,17 @@ class profilestate extends State<profile> {
           child: Row(
             children: <Widget>[
               FlatButton(
-                onPressed: () {
-                  print('Performance');
-                },
-                child: Container(
-                  padding: EdgeInsets.only(left: screenWidth * 0.06),
-                  child: Text(
-                    'Performance',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
-                  ),
-                )
-              ),
+                  onPressed: () {
+                    print('Performance');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: screenWidth * 0.06),
+                    child: Text(
+                      'Performance',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 16.0),
+                    ),
+                  )),
               FlatButton(
                 onPressed: () {
                   print('Account Settings');
@@ -173,7 +174,8 @@ class profilestate extends State<profile> {
                 children: <Widget>[
                   Container(
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(pic),maxRadius: 60.0,
+                      backgroundImage: NetworkImage(pic),
+                      maxRadius: 60.0,
                     ),
                     height: screenHeight * 0.19,
                     width: screenWidth * 0.32,
@@ -186,7 +188,7 @@ class profilestate extends State<profile> {
                       name,
                       style: TextStyle(fontSize: 19.0),
                     ),
-                  )
+                  ),
                 ],
               ),
               Column(
@@ -218,8 +220,12 @@ class profilestate extends State<profile> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(left: screenHeight * 0.015,top: screenHeight * 0.001),
-                child: Text('Badges',style: TextStyle(fontSize: 16.0),),
+                padding: EdgeInsets.only(
+                    left: screenHeight * 0.015, top: screenHeight * 0.001),
+                child: Text(
+                  'Badges',
+                  style: TextStyle(fontSize: 16.0),
+                ),
               )
             ],
           ),
